@@ -1,0 +1,14 @@
+com\peerdrop\model\TransferHistory.class
+com\peerdrop\repository\TransferHistoryRepository.class
+com\peerdrop\controller\ApiController.class
+com\peerdrop\model\Room.class
+com\peerdrop\PeerDropApplication.class
+com\peerdrop\repository\RoomRepository.class
+com\peerdrop\model\PeerSession.class
+com\peerdrop\dto\WebSocketMessage.class
+com\peerdrop\websocket\SignalingHandler.class
+com\peerdrop\config\WebSocketConfig.class
+com\peerdrop\repository\PeerSessionRepository.class
+com\peerdrop\config\CorsConfig.class
+com\peerdrop\service\RoomService.class
+com\peerdrop\dto\RoomInfo.class

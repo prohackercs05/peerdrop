@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="PeerDrop - Secure P2P file sharing with no account required. Share files directly between browsers using WebRTC."
+    />
+    <meta
+      name="keywords"
+      content="file sharing, P2P, WebRTC, secure, privacy, no account"
+    />
+    <meta name="author" content="PeerDrop" />
+
+    <!-- SEO -->
+    <title>PeerDrop - Secure P2P File Sharing</title>
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'><circle cx='24' cy='24' r='8' fill='%233B82F6'/><circle cx='24' cy='24' r='14' stroke='%2322D3EE' stroke-width='1.5' stroke-dasharray='3 3' fill='none' opacity='0.5'/><circle cx='24' cy='24' r='20' stroke='%233B82F6' stroke-width='1.5' stroke-dasharray='3 3' fill='none' opacity='0.3'/><circle cx='38' cy='24' r='3' fill='%2322D3EE'/><circle cx='10' cy='24' r='2.5' fill='%233B82F6'/></svg>"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/pages.css" />
+
+  </head>
+  <body>
+    <!-- Background Animation -->
+    <div class="background-animation">
+      <div class="gradient-orb orb-1"></div>
+      <div class="gradient-orb orb-2"></div>
+      <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-top">
+          <div class="logo" data-page="welcome" style="cursor: pointer;">
+            <div class="logo-animation-container">
+              <svg class="logo-svg-animated" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Inner Core -->
+                <circle class="logo-core" cx="24" cy="24" r="6" fill="url(#logo-grad)" />
+                <!-- Orbit Paths -->
+                <circle class="logo-orbit" cx="24" cy="24" r="14" stroke="var(--glass-border-bright)" stroke-width="0.5" stroke-dasharray="2 4" />
+                <circle class="logo-orbit" cx="24" cy="24" r="20" stroke="var(--glass-border-bright)" stroke-width="0.5" stroke-dasharray="2 4" />
+                <!-- Moving Packets -->
+                <circle class="logo-packet p1" r="2.5" fill="var(--accent-primary)" />
+                <circle class="logo-packet p2" r="2" fill="var(--accent-secondary)" />
+                <!-- Connecting Waves -->
+                <circle class="logo-wave" cx="24" cy="24" r="6" stroke="var(--accent-primary)" stroke-width="1" />
+                <defs>
+                  <linearGradient id="logo-grad" x1="24" y1="18" x2="24" y2="30" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="var(--accent-primary)" />
+                    <stop offset="1" stop-color="var(--accent-secondary)" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <h1 class="logo-text">PeerDrop</h1>
+          </div>
+          
+          <div class="header-actions-top">
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+          </div>
+        </div>
+
+        <p class="tagline">Secure P2P File Sharing</p>
+        
+        <nav class="navbar" id="mainNav">
+            <a href="#" class="nav-link" data-page="welcome">Home</a>
+            <a href="#" class="nav-link" data-page="room" id="roomNavLink" style="display: none;">Room</a>
+            <a href="#" class="nav-link" data-page="history">History</a>
+            <a href="#" class="nav-link" data-page="howItWorks">How It Works</a>
+            <a href="#" class="nav-link" data-page="security">Security</a>
+            <a href="#" class="nav-link" data-page="faq">FAQ</a>
+            <a href="#" class="nav-link" data-page="about">About</a>
+            <a href="#" class="nav-link" data-page="contact">Contact</a>
+        </nav>
+
+        <div class="header-bottom">
+          <!-- Combined Status Bar -->
+          <div class="connection-status" id="connectionStatus">
+            <!-- Peer Status -->
+            <div class="status-item peer-status" id="peerStatus">
+              <span class="status-dot waiting" id="peerStatusDot"></span>
+              <span class="status-text" id="peerStatusText">Waiting...</span>
+            </div>
+            
+            <div class="status-divider"></div>
+            
+            <!-- Server Status -->
+            <div class="status-item">
+              <span class="status-dot connecting" id="statusDot"></span>
+              <span class="status-text" id="statusText">Connecting...</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content Area -->
+      <main class="main-content">
+        <!-- Welcome Screen -->
+        <div class="screen active" id="welcomeScreen">
+          <div class="welcome-content">
+            <h2 class="screen-title">Share Files Instantly</h2>
+            <p class="screen-subtitle">
+              No account. No cloud. No limits.<br />
+              Direct browser-to-browser file transfer.
+            </p>
+
+            <div class="action-buttons">
+              <button class="btn btn-primary btn-large" id="createRoomBtn">Create Room</button>
+              <button class="btn btn-secondary btn-large" id="joinRoomBtn">Join Room</button>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="features">
+              <div class="feature">
+                <span class="feature-icon"><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></span>
+                <span class="feature-text">End-to-End Encrypted</span>
+              </div>
+              <div class="feature">
+                <span class="feature-icon"><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polyline></svg></span>
+                <span class="feature-text">No Cloud Storage</span>
+              </div>
+              <div class="feature">
+                <span class="feature-icon"><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg></span>
+                <span class="feature-text">No Signups</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Join Room Screen -->
+        <div class="screen" id="joinScreen">
+          <button class="back-btn" id="backFromJoin">
+            <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></span> Back
+          </button>
+
+          <div class="join-content">
+            <h2 class="screen-title">Join a Room</h2>
+            <p class="screen-subtitle">Enter the 6-digit room code</p>
+
+            <div class="code-input-container">
+              <input
+                type="text"
+                class="code-input"
+                id="roomCodeInput"
+                placeholder="ABC123"
+                maxlength="6"
+                autocomplete="off"
+                spellcheck="false"
+              />
+            </div>
+
+            <button class="btn btn-primary btn-large" id="joinRoomSubmitBtn">
+              Join Room
+            </button>
+
+            <p class="help-text"><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: text-bottom;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"></path></svg> Ask the sender for their room code</p>
+          </div>
+        </div>
+
+        <!-- Transfer History Screen -->
+        <div class="screen" id="historyScreen">
+          <div class="screen-content history-content">
+            <h2 class="screen-title">Transfer History</h2>
+            <p class="screen-subtitle">Manage your recent file transfers</p>
+
+            <!-- Received Files Section -->
+            <div class="history-section" id="receivedSection">
+              <div class="section-header">
+                <div class="header-main">
+                  <h3>Received Files</h3>
+                  <div class="select-all-wrapper">
+                    <label class="custom-checkbox-sm">
+                      <input type="checkbox" id="selectAllReceived">
+                      <span class="checkbox-box"></span>
+                      <span class="checkbox-label">Select All</span>
+                    </label>
+                  </div>
+                </div>
+                <button class="btn-clear-selected" id="clearReceivedBtn" disabled>
+                  Clear Selected (0)
+                </button>
+              </div>
+              <div class="history-list" id="receivedHistoryList">
+                <!-- Items populated by JS -->
+                <div class="empty-state">📥 No received files yet</div>
+              </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <!-- Sent Files Section -->
+            <div class="history-section" id="sentSection">
+              <div class="section-header">
+                <div class="header-main">
+                  <h3>Sent Files</h3>
+                  <div class="select-all-wrapper">
+                    <label class="custom-checkbox-sm">
+                      <input type="checkbox" id="selectAllSent">
+                      <span class="checkbox-box"></span>
+                      <span class="checkbox-label">Select All</span>
+                    </label>
+                  </div>
+                </div>
+                <button class="btn-clear-selected" id="clearSentBtn" disabled>
+                  Clear Selected (0)
+                </button>
+              </div>
+              <div class="history-list" id="sentHistoryList">
+                <!-- Items populated by JS -->
+                <div class="empty-state">📤 No sent files yet</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Room Screen -->
+        <div class="screen" id="roomScreen">
+          <div class="room-header-premium">
+            <div class="room-header-top">
+              <h2 class="room-label-tiny">Your Room Code</h2>
+              <span class="room-code-hero" id="roomCode">2XRKLF</span>
+            </div>
+            
+            <div class="room-header-mid">
+              <button class="btn-copy-code" id="copyCodeBtn" title="Copy Room Code">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                <span>Copy Code</span>
+              </button>
+              <p class="room-status-instruction" id="roomStatusText">Once your peer joins using this code, you can start sharing</p>
+            </div>
+            
+            <div class="room-header-bottom">
+              <button class="btn-leave-ghost" id="leaveRoomBtn">Leave Room</button>
+            </div>
+          </div>
+
+
+
+          <!-- File Transfer Area -->
+          <div class="transfer-area" id="transferArea">
+            <!-- File Selection -->
+            <div class="file-selector" id="fileSelector">
+              <div class="drop-zone" id="dropZone">
+                <div class="drop-zone-content">
+                  <!-- Upload SVG icon in the corner -->
+                  <svg class="drop-icon-large" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                  
+                  <h3 class="drop-title">Drop files or folders here</h3>
+                  
+                  <div class="drop-actions-container">
+                    <label class="btn btn-select-files" id="triggerFileBtn">
+                      <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                      <span>Select Files</span>
+                      <input type="file" id="fileInput" class="visually-hidden" multiple />
+                    </label>
+                    
+                    <label class="btn btn-select-folder" id="triggerFolderBtn">
+                      <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2v11z"></path></svg>
+                      <span>Select Folder</span>
+                      <input type="file" id="folderInput" class="visually-hidden" webkitdirectory directory mozdirectory />
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- /file-selector -->
+
+            <!-- File Queue -->
+            <div class="file-queue" id="fileQueue">
+              <!-- Files will be added here dynamically -->
+            </div>
+
+            <!-- Transfer Section (Multiple Files) -->
+            <div class="active-transfer-container hidden" id="activeTransferContainer">
+              <div class="transfer-list" id="transferList">
+                <!-- Transfer items will be injected here -->
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
+
+        <!-- FAQ Screen -->
+        <div class="screen page-container" id="faqScreen">
+            <div class="page-header">
+                <h2 class="page-title">Frequently Asked Questions</h2>
+            </div>
+            <div class="page-section">
+                <div class="faq-accordion">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Is my file stored on your server?
+                            <span class="faq-icon"><svg class="icon faq-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>No. Files are transferred directly between devices using WebRTC. We do not have any storage servers for user files.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Is there a file size limit?
+                            <span class="faq-icon"><svg class="icon faq-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Technically, no. Since it's P2P, the limit depends on your browser and device memory. We've optimized PeerDrop for files up to 5GB+.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Why is the transfer speed slow?
+                            <span class="faq-icon"><svg class="icon faq-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Speed depends on the network connection of both you and the receiver. If you are on the same WiFi, it will be extremely fast (LAN speed). If over the internet, it depends on your upload/download speeds.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Does it work on mobile?
+                            <span class="faq-icon"><svg class="icon faq-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes, PeerDrop works on modern mobile browsers (Chrome, Safari, Firefox). Keep your screen awake for large transfers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works Screen -->
+        <div class="screen page-container" id="howItWorksScreen">
+            <div class="page-header">
+                <h2 class="page-title">How It Works</h2>
+                <p class="page-subtitle">Simple, fast, and secure p2p file transfer.</p>
+            </div>
+            <div class="page-section">
+                <div class="process-steps">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">Create a Room</h3>
+                        <p class="step-desc">Click 'Create Room' to generate a unique 6-digit code.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">Share the Code</h3>
+                        <p class="step-desc">Share the code with the person you want to send files to.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">Send Files</h3>
+                        <p class="step-desc">Select or drop files to transfer them directly to your peer.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Screen -->
+        <div class="screen page-container" id="securityScreen">
+            <div class="page-header">
+                <h2 class="page-title">Security & Privacy</h2>
+            </div>
+            <div class="page-section">
+                <div class="text-content">
+                    <h3 class="section-heading">Peer-to-Peer Transfer</h3>
+                    <p>Files are transferred directly from your browser to the recipient's browser. No data ever touches our servers except for initial connection signaling.</p>
+                    <h3 class="section-heading">End-to-End Encryption</h3>
+                    <p>WebRTC DataChannels are encrypted using DTLS (Datagram Transport Layer Security) by default in all modern browsers.</p>
+                    <h3 class="section-heading">No Persistence</h3>
+                    <p>Since we don't store your files, they can't be leaked from our servers. Once the transfer is complete and browsers are closed, no trace of the file remains on the network.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Screen -->
+        <div class="screen page-container" id="aboutScreen">
+            <div class="page-header">
+                <h2 class="page-title">About PeerDrop</h2>
+            </div>
+            <div class="page-section">
+                <div class="text-content">
+                    <p>PeerDrop was built with a single goal: to make file sharing as simple and private as possible. We believe you shouldn't have to upload your private documents to a cloud server just to give them to someone in the same room.</p>
+                    <p>Our technology leverages WebRTC to create a direct link between devices, ensuring maximum speed and total privacy.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Screen -->
+        <div class="screen page-container" id="contactScreen">
+            <div class="page-header">
+                <h2 class="page-title">Contact</h2>
+            </div>
+            <div class="page-section">
+                <div class="text-content">
+                    <p>Have questions or feedback? We'd love to hear from you!</p>
+                    <p>Email: <a href="mailto:chetansmahajan05@gmail.com" style="color: var(--accent-primary);">chetansmahajan05@gmail.com</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy Screen -->
+        <div class="screen page-container" id="privacyScreen">
+            <div class="page-header">
+                <h2 class="page-title">Privacy Policy</h2>
+            </div>
+            <div class="page-section">
+                <div class="text-content">
+                    <p>Your privacy is our core value. We do not track you, we do not use cookies, and we definitely do not see your files.</p>
+                    <p>We only use a signaling server to help the two browsers find each other. Once the connection is established, the browsers talk to each other directly.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terms Screen -->
+        <div class="screen page-container" id="termsScreen">
+            <div class="page-header">
+                <h2 class="page-title">Terms of Service</h2>
+            </div>
+            <div class="page-section">
+                <div class="text-content">
+                    <p>PeerDrop is provided as-is, without any warranties. You are responsible for the content you share.</p>
+                    <p>Commercial use is allowed. Redistribution of this code is governed by the MIT license.</p>
+                </div>
+            </div>
+        </div>
+
+      </main>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <p class="copyright">&copy; 2026 PeerDrop. Built with ⚡ WebRTC</p>
+                
+                <div class="footer-right">
+                    <div class="footer-legal">
+                        <a href="#" class="footer-link" data-page="privacy">Privacy</a>
+                        <a href="#" class="footer-link" data-page="terms">Terms</a>
+                    </div>
+                    
+                    <div class="footer-social">
+                        <a href="https://github.com/Chetan13m" target="_blank" class="social-icon-btn" title="GitHub">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/chetan-mahajan-550314252" target="_blank" class="social-icon-btn" title="LinkedIn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Hidden inputs moved back to UI container -->
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/websocket.js"></script>
+    <script src="js/webrtc.js"></script>
+    <script src="js/fileTransfer.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
